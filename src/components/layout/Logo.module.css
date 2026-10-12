@@ -1,0 +1,28 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-cream);
+  text-decoration: none;
+}
+
+.mark {
+  width: 0.65rem;
+  height: 0.65rem;
+  background: var(--color-gold);
+  transform: rotate(45deg);
+  flex: none;
+}
+
+.name {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+.logo:hover .name {
+  color: var(--color-gold-bright);
+}

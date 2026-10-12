@@ -1,0 +1,361 @@
+.hero {
+  position: relative;
+  min-height: calc(100svh / var(--fit));
+  display: grid;
+  align-items: end;
+  color: var(--color-cream);
+  overflow: hidden;
+}
+
+.heroImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 62%;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(28, 10, 12, 0.18) 0%, rgba(28, 10, 12, 0.88) 78%);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(3rem, 8vw, 5.5rem);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-gold-text);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.heroContent h1 {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(4rem, 11vw, 7.25rem);
+  line-height: 0.86;
+  letter-spacing: -0.03em;
+}
+
+.heroContent h1 span {
+  display: block;
+}
+
+.lede {
+  max-width: 34rem;
+  margin-top: 1.15rem;
+  color: #f6f1e8;
+  font-size: 1.12rem;
+  font-weight: 300;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.facts {
+  display: grid;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.facts li {
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+.facts strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-maroon);
+}
+
+.facts span {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--color-muted);
+}
+
+:global(.section).storySection {
+  padding-bottom: 1.5rem;
+}
+
+:global(.section).signatures {
+  padding-top: 1.5rem;
+}
+
+.story {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.frame {
+  padding: 0.65rem;
+  border: 1px solid var(--color-gold);
+}
+
+.frame img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.storyMore {
+  margin: 1rem 0 1.5rem;
+  color: var(--color-muted);
+}
+
+.featureRow {
+  margin-top: 2.5rem;
+}
+
+.grid {
+  display: grid;
+  gap: 2rem 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card img {
+  width: min(100%, 400px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--color-maroon);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.card h3 {
+  margin-top: 0.3rem;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.cardText {
+  margin-top: 0.4rem;
+  color: var(--color-muted);
+}
+
+.cardPrice {
+  margin-top: 0.55rem;
+  color: var(--color-maroon);
+  font-weight: 500;
+}
+
+.card:hover h3 {
+  color: var(--color-maroon);
+}
+
+.specials {
+  margin-top: 2.5rem;
+  padding: 1.35rem 1.2rem 0.35rem;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-top: 3px solid var(--color-maroon);
+}
+
+.specialsEyebrow {
+  margin: 0;
+  color: var(--color-maroon);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.specials h3 {
+  margin-top: 0.35rem;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-maroon-deep);
+}
+
+.specialsNote {
+  margin-top: 0.65rem;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.specialGroup h4 {
+  margin: 1.15rem 0 0;
+  color: var(--color-maroon);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.specialGroup li {
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.specialTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.specialTop p {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  line-height: 1.15;
+}
+
+.specialTop p span {
+  min-width: 0;
+}
+
+.specialTop > span {
+  flex: none;
+  color: var(--color-maroon);
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.specialText {
+  margin-top: 0.25rem;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.band {
+  position: relative;
+  min-height: 26rem;
+  display: grid;
+  align-items: end;
+  color: var(--color-cream);
+  overflow: hidden;
+}
+
+.band img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+}
+
+.bandShade {
+  position: relative;
+  z-index: 1;
+  padding-block: 3rem 2.75rem;
+  background: linear-gradient(180deg, transparent, rgba(28, 10, 12, 0.82));
+}
+
+.band h2 {
+  max-width: 12ch;
+  margin-top: 0.45rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.7rem, 6vw, 4.4rem);
+  font-weight: 500;
+  line-height: 0.95;
+}
+
+@media (max-width: 719px) {
+  .facts li + li {
+    border-top: 1px solid var(--color-line);
+  }
+}
+
+@media (min-width: 720px) {
+  .facts {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .facts li + li {
+    border-left: 1px solid var(--color-line);
+  }
+
+  .specialGroups {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+  }
+}
+
+@media (min-width: 860px) {
+  .story {
+    grid-template-columns: 0.82fr 1.18fr;
+    gap: 4rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 400px);
+    justify-content: left;
+    column-gap: 3rem;
+  }
+
+  .card img {
+    width: 400px;
+    height: 300px;
+  }
+}
+
+@media (min-width: 1180px) {
+  .featureRow {
+    display: grid;
+    grid-template-columns: auto minmax(14.5rem, 17rem);
+    column-gap: 1.75rem;
+    align-items: stretch;
+  }
+
+  .specials {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 0;
+  }
+
+  .specialGroups {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.35rem;
+  }
+}

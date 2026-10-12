@@ -1,0 +1,58 @@
+.heading h1,
+.heading h2 {
+  margin: 0.45rem 0 0;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 1.75rem;
+  height: 1px;
+  margin-right: 0.7rem;
+  vertical-align: middle;
+  background: var(--color-gold);
+}
+
+.lede {
+  max-width: 38rem;
+  margin: 1rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.light .eyebrow,
+.light h1,
+.light h2 {
+  color: var(--color-maroon-deep);
+}
+
+.light .lede {
+  color: var(--color-muted);
+}
+
+.dark .eyebrow {
+  color: var(--color-gold-text);
+}
+
+.dark h1,
+.dark h2 {
+  color: var(--color-cream);
+}
+
+.dark .lede {
+  color: #f3eadc;
+}

@@ -1,0 +1,24 @@
+.page {
+  min-height: calc(100vh / var(--fit));
+  display: flex;
+  flex-direction: column;
+}
+
+.page main {
+  flex: 1;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 80;
+  background: var(--color-gold);
+  color: var(--color-maroon-ink);
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+}
+
+.skip:focus {
+  top: calc(var(--header-height) + 0.5rem);
+}
