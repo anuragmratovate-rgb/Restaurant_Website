@@ -46,6 +46,18 @@ export function isClosedDay(isoDate) {
   return new Date(`${isoDate}T00:00:00`).getDay() === restaurant.closedDay
 }
 
+export function serviceNote(date) {
+  if (date.getDay() === restaurant.closedDay) {
+    return { open: false, label: 'Closed today' }
+  }
+
+  const minutes = date.getHours() * 60 + date.getMinutes()
+  const lunch = minutes >= 12 * 60 + 30 && minutes < 15 * 60
+  const dinner = minutes >= 19 * 60 && minutes < 23 * 60
+  if (lunch || dinner) return { open: true, label: 'Open now' }
+  return { open: false, label: 'Closed now' }
+}
+
 export function isPastTimeToday(isoDate, time) {
   if (isoDate !== todayISO()) return false
   const [hours, minutes] = time.split(':').map(Number)

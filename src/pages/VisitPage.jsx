@@ -1,17 +1,37 @@
+import { useEffect, useRef, useState } from 'react'
 import ContactForm from '@/components/forms/ContactForm.jsx'
 import PageIntro from '@/components/ui/PageIntro.jsx'
 import SectionHeading from '@/components/ui/SectionHeading.jsx'
 import { restaurant } from '@/data/site.js'
 import { usePageMeta } from '@/hooks/usePageMeta.js'
-import { formatTime } from '@/utils/format.js'
+import { formatTime, serviceNote } from '@/utils/format.js'
 import styles from './VisitPage.module.css'
 
+// Decided when the page loads, so the badge doesn't jump around on redraw.
+const service = serviceNote(new Date())
+
 export default function VisitPage() {
+  const hoursRef = useRef(null)
+  const [hoursSeen, setHoursSeen] = useState(false)
+
   usePageMeta({
     title: 'Visit Us | Saffron House',
     description:
       'Find Saffron House at Kemp’s Corner, Breach Candy, Mumbai. Hours, map, and a contact form.',
   })
+
+  useEffect(() => {
+    const node = hoursRef.current
+    if (!node) return undefined
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setHoursSeen(true)
+      },
+      { threshold: 0.6 },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
 
   const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(restaurant.mapQuery)}&z=15&output=embed`
   const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurant.mapQuery)}`
@@ -39,7 +59,14 @@ export default function VisitPage() {
               <a href={restaurant.emailHref}>{restaurant.email}</a>
             </p>
 
-            <h2>Hours</h2>
+            <div
+              id="hours"
+              ref={hoursRef}
+              className={hoursSeen ? `${styles.hoursHead} ${styles.hoursIn}` : styles.hoursHead}
+            >
+              <h2>Hours</h2>
+              <p className={service.open ? styles.open : styles.closed}>{service.label}</p>
+            </div>
             <table className={styles.hours}>
               <caption className="sr-only">Opening hours</caption>
               <tbody>

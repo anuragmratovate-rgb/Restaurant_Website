@@ -57,7 +57,7 @@ export default function Header() {
   return (
     <header className={headerClass}>
       <div className={`container ${styles.bar}`}>
-        <Logo />
+        <Logo animate />
         <button
           type="button"
           className={styles.toggle}
@@ -71,6 +71,8 @@ export default function Header() {
             <span />
           </span>
         </button>
+
+
         <nav
           id="site-nav"
           className={open ? `${styles.nav} ${styles.navOpen}` : styles.nav}
@@ -97,3 +99,4 @@ export default function Header() {
     </header>
   )
 }
+

@@ -14,6 +14,19 @@
   flex: none;
 }
 
+.markIn {
+  animation: markIn 0.55s ease;
+}
+
+@keyframes markIn {
+  from {
+    transform: rotate(12deg) scale(0.65);
+  }
+  to {
+    transform: rotate(45deg) scale(1);
+  }
+}
+
 .name {
   display: block;
   font-family: var(--font-serif);

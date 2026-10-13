@@ -1,47 +1,86 @@
 .button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 3rem;
-  padding: 0.75rem 1.35rem;
+  min-height: 3.15rem;
+  padding: 0.75rem 1.6rem;
   border: 1px solid transparent;
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
+  overflow: hidden;
   transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
+    transform 0.18s cubic-bezier(0.2, 0.8, 0.4, 1),
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.button:hover .shimmer {
+  left: 200%;
 }
 
 .button:focus-visible {
-  outline: 2px solid var(--color-cream);
+  outline: 2px solid var(--color-gold-bright);
   outline-offset: 3px;
 }
 
 .primary {
   background: var(--color-gold);
   color: var(--color-maroon-ink);
+  box-shadow: 0 4px 14px rgba(198, 161, 91, 0.25);
 }
 
 .primary:hover {
   background: var(--color-gold-bright);
+  box-shadow: 0 6px 20px rgba(198, 161, 91, 0.4);
 }
 
 .secondary {
-  background: transparent;
+  background: rgba(246, 241, 232, 0.04);
   color: var(--color-cream);
-  border-color: rgba(246, 241, 232, 0.72);
+  border-color: rgba(246, 241, 232, 0.75);
+  backdrop-filter: blur(4px);
 }
 
 .secondary:hover {
   background: var(--color-cream);
   color: var(--color-maroon-ink);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 .ghost {
@@ -53,6 +92,7 @@
 .ghost:hover {
   background: var(--color-maroon);
   color: var(--color-cream);
+  box-shadow: 0 6px 20px rgba(110, 36, 48, 0.2);
 }
 
 .ghost:focus-visible {
@@ -62,3 +102,4 @@
 .current {
   box-shadow: inset 0 0 0 1px rgba(42, 13, 17, 0.28);
 }
+

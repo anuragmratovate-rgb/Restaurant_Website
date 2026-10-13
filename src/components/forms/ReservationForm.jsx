@@ -1,10 +1,32 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { occasionLabel, restaurant } from '@/data/site.js'
 import Button from '@/components/ui/Button.jsx'
 import Field from '@/components/forms/Field.jsx'
-import { formatGuests, formatLongDate, formatTime, todayISO } from '@/utils/format.js'
+import { formatGuests, formatLongDate, formatTime, isClosedDay, todayISO } from '@/utils/format.js'
 import { focusFirstInvalid, validateReservation } from '@/utils/validation.js'
 import styles from './ReservationForm.module.css'
+
+const seatingZones = [
+  {
+    id: 'main',
+    name: 'Main Dining Room',
+    badge: 'Linen Tables',
+    desc: 'Intimate candlelight beneath handcrafted brass lattice screens.',
+  },
+  {
+    id: 'counter',
+    name: "Chef's Counter",
+    badge: 'Sigri View',
+    desc: 'Front-row view of live charcoal grilling and delicate plate finishing.',
+  },
+  {
+    id: 'alcove',
+    name: 'Saffron Courtyard Alcove',
+    badge: 'Quiet & Private',
+    desc: 'Deep banquette seating surrounded by stone latticework.',
+  },
+]
 
 const emptyValues = {
   name: '',
@@ -13,12 +35,18 @@ const emptyValues = {
   date: '',
   time: '',
   guests: '',
+  seatingZone: 'main',
   occasion: '',
   notes: '',
 }
 
 export default function ReservationForm() {
-  const [values, setValues] = useState(emptyValues)
+  const carried = useLocation().state?.note
+  const [values, setValues] = useState({
+    ...emptyValues,
+    notes: typeof carried === 'string' ? carried : '',
+  })
+
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(null)
   const titleRef = useRef(null)
@@ -32,7 +60,26 @@ export default function ReservationForm() {
   function handleChange(event) {
     const { name, value } = event.target
     setValues((current) => ({ ...current, [name]: value }))
-    setErrors((current) => ({ ...current, [name]: undefined }))
+    setErrors((current) => {
+      const next = { ...current, [name]: undefined }
+      if (name === 'date' && value && isClosedDay(value)) {
+        next.date = `The dining room is closed on ${restaurant.closedDayLabel}.`
+      }
+      return next
+    })
+  }
+
+  function changeGuests(step) {
+    setValues((current) => {
+      const count = Math.min(restaurant.maxParty, Math.max(0, Number(current.guests || 0) + step))
+      return { ...current, guests: count ? String(count) : '' }
+    })
+    setErrors((current) => ({ ...current, guests: undefined }))
+  }
+
+  function chooseTime(time) {
+    setValues((current) => ({ ...current, time }))
+    setErrors((current) => ({ ...current, time: undefined }))
   }
 
   function handleSubmit(event) {
@@ -55,16 +102,13 @@ export default function ReservationForm() {
   if (submitted) {
     const occasion = occasionLabel(submitted.occasion)
     return (
-      <div className={styles.success} role="status">
-        <p className={styles.kicker}>Request noted</p>
+      <div className={styles.pass} role="status">
+        <p className={styles.kicker}>Saffron House</p>
         <h2 tabIndex={-1} ref={titleRef}>
-          Thank you, {submitted.name}.
+          {submitted.name}
         </h2>
-        <p className={styles.lead}>
-          A table for {formatGuests(submitted.guests)} is noted for {formatLongDate(submitted.date)}{' '}
-          at {formatTime(submitted.time)}.
-        </p>
-        <dl className={styles.details}>
+        <p className={styles.lead}>A table is noted for the evening below.</p>
+        <dl className={styles.passFacts}>
           <div>
             <dt>Date</dt>
             <dd>{formatLongDate(submitted.date)}</dd>
@@ -74,9 +118,15 @@ export default function ReservationForm() {
             <dd>{formatTime(submitted.time)}</dd>
           </div>
           <div>
-            <dt>Guests</dt>
+            <dt>Party</dt>
             <dd>{formatGuests(submitted.guests)}</dd>
           </div>
+          <div>
+            <dt>Atmosphere</dt>
+            <dd>{seatingZones.find((z) => z.id === (submitted.seatingZone || 'main'))?.name}</dd>
+          </div>
+        </dl>
+        <dl className={styles.details}>
           {occasion ? (
             <div>
               <dt>Occasion</dt>
@@ -110,7 +160,30 @@ export default function ReservationForm() {
           Please check the highlighted fields.
         </p>
       ) : null}
+
+      <div className={styles.seatingSection}>
+        <p className={styles.seatingHeading}>Preferred Dining Atmosphere</p>
+        <p className={styles.seatingHint}>Each setting offers an unhurried, distinct vantage of the house.</p>
+        <div className={styles.zoneGrid} role="radiogroup" aria-label="Dining atmosphere">
+          {seatingZones.map((zone) => (
+            <button
+              key={zone.id}
+              type="button"
+              role="radio"
+              aria-checked={values.seatingZone === zone.id}
+              className={values.seatingZone === zone.id ? `${styles.zoneCard} ${styles.zoneCardActive}` : styles.zoneCard}
+              onClick={() => setValues((curr) => ({ ...curr, seatingZone: zone.id }))}
+            >
+              <span className={styles.zoneBadge}>{zone.badge}</span>
+              <strong className={styles.zoneName}>{zone.name}</strong>
+              <span className={styles.zoneDesc}>{zone.desc}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className={styles.row}>
+
         <Field id="name" label="Full name" required error={errors.name}>
           <input name="name" value={values.name} onChange={handleChange} autoComplete="name" />
         </Field>
@@ -137,38 +210,70 @@ export default function ReservationForm() {
           />
         </Field>
         <Field id="guests" label="Guests" required error={errors.guests}>
-          <select name="guests" value={values.guests} onChange={handleChange}>
-            <option value="">Select party size</option>
-            {Array.from({ length: restaurant.maxParty }, (_, index) => {
-              const count = index + 1
-              return (
-                <option key={count} value={count}>
-                  {formatGuests(count)}
-                </option>
-              )
-            })}
-          </select>
+          <div className={errors.guests ? `${styles.stepper} ${styles.stepperBad}` : styles.stepper} tabIndex={-1}>
+            <button
+              type="button"
+              aria-label="Fewer guests"
+              disabled={!values.guests || Number(values.guests) <= 1}
+              onClick={() => changeGuests(-1)}
+            >
+              −
+            </button>
+            <span>{values.guests ? formatGuests(values.guests) : 'Select a party'}</span>
+            <button
+              type="button"
+              aria-label="More guests"
+              disabled={Number(values.guests) >= restaurant.maxParty}
+              onClick={() => changeGuests(1)}
+            >
+              +
+            </button>
+          </div>
         </Field>
       </div>
-      <div className={styles.row}>
-        <Field id="date" label="Date" required error={errors.date}>
-          <input name="date" type="date" min={minDate} value={values.date} onChange={handleChange} />
+      <Field
+          id="date"
+          label="Date"
+          required
+          error={errors.date}
+          hint="The kitchen rests on Mondays."
+        >
+          <input
+            name="date"
+            type="date"
+            min={minDate}
+            value={values.date}
+            onChange={handleChange}
+            className={values.date && isClosedDay(values.date) ? styles.closedDate : undefined}
+          />
         </Field>
         <Field id="time" label="Time" required error={errors.time}>
-          <select name="time" value={values.time} onChange={handleChange}>
-            <option value="">Select a seating</option>
+          <div
+            className={errors.time ? `${styles.times} ${styles.timesBad}` : styles.times}
+            role="group"
+            aria-label="Seating time"
+            tabIndex={-1}
+          >
             {Object.entries(restaurant.reservationTimes).map(([group, times]) => (
-              <optgroup key={group} label={group}>
-                {times.map((time) => (
-                  <option key={time} value={time}>
-                    {formatTime(time)}
-                  </option>
-                ))}
-              </optgroup>
+              <div key={group} className={styles.timeGroup}>
+                <p>{group}</p>
+                <div className={styles.chips}>
+                  {times.map((time) => (
+                    <button
+                      key={time}
+                      type="button"
+                      className={styles.chip}
+                      aria-pressed={values.time === time}
+                      onClick={() => chooseTime(time)}
+                    >
+                      {formatTime(time)}
+                    </button>
+                  ))}
+                </div>
+              </div>
             ))}
-          </select>
+          </div>
         </Field>
-      </div>
       <Field id="occasion" label="Occasion" error={errors.occasion}>
         <select name="occasion" value={values.occasion} onChange={handleChange}>
           <option value="">No special occasion</option>

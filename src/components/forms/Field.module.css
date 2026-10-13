@@ -59,3 +59,8 @@
   color: var(--color-danger);
   font-size: 0.9rem;
 }
+
+.hint {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}

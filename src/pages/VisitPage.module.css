@@ -29,6 +29,52 @@
   text-underline-offset: 0.18em;
 }
 
+.hoursHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.65rem 1rem;
+  margin-top: 1.75rem;
+}
+
+.hoursHead h2 {
+  margin-top: 0;
+}
+
+.open,
+.closed {
+  margin: 0;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.open {
+  background: var(--color-maroon);
+  color: var(--color-cream);
+}
+
+.closed {
+  background: var(--color-cream-deep);
+  color: var(--color-muted);
+}
+
+.hoursIn .open,
+.hoursIn .closed {
+  animation: hoursIn 0.45s ease both;
+}
+
+@keyframes hoursIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .hours {
   width: 100%;
   margin-top: 0.85rem;

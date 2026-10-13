@@ -24,17 +24,23 @@ function ScrollToTop() {
 }
 
 export default function Layout() {
+  const { pathname } = useLocation()
+
   return (
     <div className={styles.page}>
       <ScrollToTop />
+
       <a className={styles.skip} href="#main">
         Skip to content
       </a>
       <Header />
       <main id="main">
-        <Outlet />
+        <div key={pathname} className={styles.enter}>
+          <Outlet />
+        </div>
       </main>
       <Footer />
     </div>
   )
 }
+

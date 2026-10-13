@@ -1,7 +1,7 @@
 import { cloneElement, isValidElement } from 'react'
 import styles from './Field.module.css'
 
-export default function Field({ id, label, required = false, error, children }) {
+export default function Field({ id, label, required = false, error, hint, children }) {
   const errorId = `${id}-error`
   const control = isValidElement(children)
     ? cloneElement(children, {
@@ -25,6 +25,8 @@ export default function Field({ id, label, required = false, error, children }) 
         <p id={errorId} className={styles.error}>
           {error}
         </p>
+      ) : hint ? (
+        <p className={styles.hint}>{hint}</p>
       ) : null}
     </div>
   )

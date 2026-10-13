@@ -1,15 +1,68 @@
+import { useEffect, useRef, useState } from 'react'
 import { story } from '@/data/story.js'
 import PageIntro from '@/components/ui/PageIntro.jsx'
 import ReserveBanner from '@/components/ui/ReserveBanner.jsx'
 import { usePageMeta } from '@/hooks/usePageMeta.js'
 import styles from './StoryPage.module.css'
 
+const spiceMarks = [
+  { name: 'Cinnamon', top: '13%', left: '46%' },
+  { name: 'Dried chilli', top: '8%', left: '82%' },
+  { name: 'Ginger', top: '54%', left: '17%' },
+  { name: 'Turmeric', top: '63%', left: '90%' },
+]
+
 export default function StoryPage() {
+  const portraitRef = useRef(null)
+  const spiceRef = useRef(null)
+  const frameRef = useRef(null)
+  const [spicesSeen, setSpicesSeen] = useState(false)
+  const [frameSeen, setFrameSeen] = useState(false)
+
   usePageMeta({
     title: 'Our Story | Saffron House',
     description:
       'Saffron House opened in Breach Candy in 2014. A short regional Indian menu, cooked without hurry.',
   })
+
+  useEffect(() => {
+    const watch = (node, markSeen) => {
+      if (!node) return undefined
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) markSeen(true)
+        },
+        { threshold: 0.35 },
+      )
+      observer.observe(node)
+      return () => observer.disconnect()
+    }
+
+    const stopSpice = watch(spiceRef.current, setSpicesSeen)
+    const stopFrame = watch(frameRef.current, setFrameSeen)
+    return () => {
+      stopSpice?.()
+      stopFrame?.()
+    }
+  }, [])
+
+  useEffect(() => {
+    const portrait = portraitRef.current
+    if (!portrait) return undefined
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
+
+    const onScroll = () => {
+      const rect = portrait.getBoundingClientRect()
+      const scale = Number(document.getElementById('root')?.style.zoom || 1)
+      const mid = (rect.top + rect.height / 2) * scale
+      const shift = Math.max(-16, Math.min(16, (window.innerHeight / 2 - mid) * 0.06))
+      portrait.style.transform = `translateY(${shift}px)`
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <>
@@ -17,13 +70,28 @@ export default function StoryPage() {
       <section className={`section container ${styles.storyBody}`}>
         <div className={styles.split}>
           <div className={styles.frame}>
-            <img
-              src="/images/spices.jpg"
-              alt="Ginger, chilli, turmeric, and whole spices arranged on a pale table"
-              width="800"
-              height="800"
-              loading="lazy"
-            />
+            <div
+              ref={spiceRef}
+              className={spicesSeen ? `${styles.spicePhoto} ${styles.spiceLive}` : styles.spicePhoto}
+            >
+              <img
+                src="/images/spices.jpg"
+                alt="Ginger, chilli, turmeric, and whole spices arranged on a pale table"
+                width="800"
+                height="800"
+                loading="lazy"
+              />
+              {spiceMarks.map((mark) => (
+                <button
+                  key={mark.name}
+                  type="button"
+                  className={styles.spiceDot}
+                  style={{ top: mark.top, left: mark.left }}
+                >
+                  <span>{mark.name}</span>
+                </button>
+              ))}
+            </div>
           </div>
           <div className={styles.copy}>
             {story.paragraphs.map((paragraph) => (
@@ -39,13 +107,17 @@ export default function StoryPage() {
             <blockquote className={styles.quote}>{story.quote}</blockquote>
             <figcaption>{story.attribution}</figcaption>
           </figure>
-          <div className={styles.chefFrame}>
+          <div ref={frameRef} className={frameSeen ? `${styles.chefFrame} ${styles.drawn}` : styles.chefFrame}>
             <img
+              ref={portraitRef}
               src="/images/chef_meera.jpg"
               alt="Chef Meera Iyer finishing a plate in the kitchen"
               width="864"
               height="1152"
             />
+            <svg className={styles.frameStroke} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <rect x="0.5" y="0.5" width="99" height="99" pathLength="1" />
+            </svg>
           </div>
         </div>
       </section>

@@ -17,8 +17,15 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   color: var(--color-ink);
-  background: var(--color-cream);
+  background-color: var(--color-cream);
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(198, 161, 91, 0.05) 0px, transparent 50%),
+    radial-gradient(at 85% 85%, rgba(110, 36, 48, 0.04) 0px, transparent 50%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
 
 img {
   max-width: 100%;

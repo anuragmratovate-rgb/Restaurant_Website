@@ -1,7 +1,136 @@
 .form,
-.success {
+.pass {
   display: grid;
   gap: 1rem;
+}
+
+.pass {
+  padding: 1.4rem 1.25rem 1.1rem;
+  background: var(--color-paper);
+  border: 1px solid var(--color-gold);
+  animation: placeCard 0.4s ease;
+}
+
+@keyframes placeCard {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.passFacts {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0.35rem;
+}
+
+.passFacts div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.passFacts dt {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.passFacts dd {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  line-height: 1.15;
+}
+
+.closedDate {
+  color: var(--color-muted);
+  background: var(--color-cream-deep);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 3.15rem;
+  padding: 0.35rem 0.4rem;
+  border: 1px solid rgba(36, 24, 22, 0.2);
+  background: var(--color-paper);
+}
+
+.stepper button {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-cream);
+  font: inherit;
+  font-size: 1.15rem;
+  cursor: pointer;
+}
+
+.stepper button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.stepperBad,
+.timesBad {
+  outline: 1px solid var(--color-danger);
+}
+
+.times {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.timeGroup p {
+  margin: 0 0 0.4rem;
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  border: 1px solid rgba(36, 24, 22, 0.2);
+  background: var(--color-paper);
+  padding: 0.42rem 0.65rem;
+  font: inherit;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.chip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-maroon);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.28s ease;
+}
+
+.chip[aria-pressed='true'] {
+  border-color: var(--color-maroon);
+  color: var(--color-cream);
+}
+
+.chip[aria-pressed='true']::before {
+  transform: scaleX(1);
 }
 
 .hint,
@@ -34,7 +163,7 @@
   text-transform: uppercase;
 }
 
-.success h2 {
+.pass h2 {
   max-width: none;
   font-family: var(--font-serif);
   font-size: clamp(2.1rem, 4vw, 3rem);
@@ -42,7 +171,7 @@
   line-height: 1.05;
 }
 
-.success h2:focus {
+.pass h2:focus {
   outline: none;
 }
 
@@ -71,9 +200,93 @@
     grid-template-columns: 1fr 1fr;
   }
 
+  .passFacts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .details div {
     grid-template-columns: 7.5rem 1fr;
     gap: 1rem;
     align-items: baseline;
   }
 }
+
+/* Seating Zone Atmosphere Explorer */
+.seatingSection {
+  margin-block: 0.5rem 0.75rem;
+  padding: 1.25rem 1.35rem;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line-gold);
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(42, 13, 17, 0.04);
+}
+
+.seatingHeading {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--color-maroon-ink);
+}
+
+.seatingHint {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-top: 0.2rem;
+}
+
+.zoneGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.zoneCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 1.15rem;
+  text-align: left;
+  background: var(--color-cream);
+  border: 1.5px solid var(--color-line);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.zoneCard:hover {
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+}
+
+.zoneCardActive {
+  background: var(--color-paper-card);
+  border-color: var(--color-maroon);
+  box-shadow: 0 6px 18px rgba(42, 13, 17, 0.1), inset 0 0 0 1px var(--color-maroon);
+}
+
+.zoneBadge {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+.zoneName {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.zoneCardActive .zoneName {
+  color: var(--color-maroon);
+}
+
+.zoneDesc {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+
