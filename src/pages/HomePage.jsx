@@ -8,7 +8,10 @@ import DietMark from '@/components/menu/DietMark.jsx'
 import Button from '@/components/ui/Button.jsx'
 import ReserveBanner from '@/components/ui/ReserveBanner.jsx'
 import SectionHeading from '@/components/ui/SectionHeading.jsx'
+import CustomerJourney from '@/components/ui/CustomerJourney.jsx'
+import CustomerReviews from '@/components/ui/CustomerReviews.jsx'
 import { usePageMeta } from '@/hooks/usePageMeta.js'
+
 import { use3DTilt } from '@/hooks/use3DTilt.js'
 import { formatPrice, formatTime } from '@/utils/format.js'
 import styles from './HomePage.module.css'
@@ -490,7 +493,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      <CustomerJourney />
+      <CustomerReviews />
+
       <section ref={bandRef} className={bandLive ? `${styles.band} ${styles.live}` : styles.band}>
+
         <img
           src="/images/platter.jpg"
           alt="Tandoori chicken with naan, green chutney, and saag"

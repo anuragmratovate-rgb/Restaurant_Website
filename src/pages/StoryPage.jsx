@@ -15,9 +15,7 @@ const spiceMarks = [
 export default function StoryPage() {
   const portraitRef = useRef(null)
   const spiceRef = useRef(null)
-  const frameRef = useRef(null)
   const [spicesSeen, setSpicesSeen] = useState(false)
-  const [frameSeen, setFrameSeen] = useState(false)
 
   usePageMeta({
     title: 'Our Story | Saffron House',
@@ -39,10 +37,8 @@ export default function StoryPage() {
     }
 
     const stopSpice = watch(spiceRef.current, setSpicesSeen)
-    const stopFrame = watch(frameRef.current, setFrameSeen)
     return () => {
       stopSpice?.()
-      stopFrame?.()
     }
   }, [])
 
@@ -107,7 +103,7 @@ export default function StoryPage() {
             <blockquote className={styles.quote}>{story.quote}</blockquote>
             <figcaption>{story.attribution}</figcaption>
           </figure>
-          <div ref={frameRef} className={frameSeen ? `${styles.chefFrame} ${styles.drawn}` : styles.chefFrame}>
+          <div className={styles.chefFrame}>
             <img
               ref={portraitRef}
               src="/images/chef_meera.jpg"
@@ -115,9 +111,6 @@ export default function StoryPage() {
               width="864"
               height="1152"
             />
-            <svg className={styles.frameStroke} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              <rect x="0.5" y="0.5" width="99" height="99" pathLength="1" />
-            </svg>
           </div>
         </div>
       </section>

@@ -12,6 +12,13 @@ export const todaysSpecials = [
         diet: 'non-vegetarian',
       },
       {
+        id: 'murgh-malai-chaap',
+        name: 'Murgh Malai Chaap',
+        description: 'Tender chicken chops charred in the tandoor with mace, malai, and green cardamom.',
+        price: 780,
+        diet: 'non-vegetarian',
+      },
+      {
         id: 'bharwan-khumb',
         name: 'Bharwan Khumb',
         description: 'Mushrooms stuffed with paneer and kasuri methi, from the tandoor.',
@@ -29,6 +36,13 @@ export const todaysSpecials = [
         name: 'Kekda Sukka',
         description: 'Crab tossed with coconut, dried chilli, and a little tamarind.',
         price: 1180,
+        diet: 'non-vegetarian',
+      },
+      {
+        id: 'nalli-nihari',
+        name: 'Awadhi Nalli Nihari',
+        description: 'Slow-simmered lamb shanks in rich bone marrow, mace, and brown onion jus.',
+        price: 980,
         diet: 'non-vegetarian',
       },
       {

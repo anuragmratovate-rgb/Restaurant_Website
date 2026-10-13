@@ -1,0 +1,526 @@
+/* ==========================================================================
+   CUSTOMER REVIEWS — FULL-WIDTH DUAL MARQUEE & RATING SHOWCASE
+   ========================================================================== */
+
+.reviewsSection {
+  background: var(--color-paper-card);
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  border-top: 1px solid var(--color-line);
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 800px;
+  margin-inline: auto;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 0.6rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2.3rem, 5vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-maroon-ink);
+}
+
+.sectionLede {
+  margin-top: 0.9rem;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+
+/* ==========================================================================
+   MASTER RATING OVERVIEW CARD
+   ========================================================================== */
+.overviewCard {
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: 2.5rem;
+  box-shadow: 0 12px 35px rgba(42, 13, 17, 0.04);
+  display: grid;
+  grid-template-columns: 1.1fr 1.3fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .overviewCard {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.ratingHero {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  border-right: 1px solid var(--color-line);
+  padding-right: 2rem;
+}
+
+@media (max-width: 900px) {
+  .ratingHero {
+    border-right: none;
+    border-bottom: 1px solid var(--color-line);
+    padding-right: 0;
+    padding-bottom: 1.5rem;
+  }
+}
+
+.bigScoreGroup {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.bigScore {
+  font-family: var(--font-serif);
+  font-size: clamp(3.5rem, 6vw, 4.8rem);
+  font-weight: 600;
+  color: var(--color-maroon-ink);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.bigScoreMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.goldStars {
+  color: var(--color-gold-bright);
+  font-size: 1.25rem;
+  letter-spacing: 0.15em;
+}
+
+.reviewCount {
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.accoladeBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: var(--color-cream);
+  border: 1px solid rgba(198, 161, 91, 0.35);
+  padding: 0.75rem 1.1rem;
+  border-radius: 10px;
+}
+
+.accoladeIcon {
+  font-size: 1.4rem;
+}
+
+.accoladeText {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.accoladeText strong {
+  color: var(--color-maroon-ink);
+  font-weight: 600;
+}
+
+.accoladeText span {
+  color: var(--color-muted);
+}
+
+/* Category Breakdown Bars */
+.breakdownGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.breakdownItem {
+  display: grid;
+  grid-template-columns: 170px 1fr 40px;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .breakdownItem {
+    grid-template-columns: 140px 1fr 35px;
+    gap: 0.6rem;
+  }
+}
+
+.breakdownLabel {
+  font-size: 0.88rem;
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.breakdownBarWrap {
+  height: 6px;
+  background: var(--color-cream);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+}
+
+.breakdownBar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-gold) 0%, var(--color-gold-bright) 100%);
+  border-radius: 999px;
+}
+
+.breakdownValue {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-maroon);
+  text-align: right;
+}
+
+/* ==========================================================================
+   FILTER TABS BAR
+   ========================================================================== */
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  padding: 0.55rem 1.15rem;
+  border-radius: 24px;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterBtn:hover {
+  border-color: var(--color-gold);
+  color: var(--color-maroon-ink);
+  transform: translateY(-1px);
+}
+
+.filterBtnActive {
+  background: var(--color-maroon);
+  border-color: var(--color-maroon);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(92, 29, 36, 0.2);
+}
+
+.hoverCue {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--color-gold);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  .hoverCue {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   DUAL-COLUMN INFINITE UPWARD MARQUEE
+   ========================================================================== */
+.marqueeStage {
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+  margin-bottom: 3.5rem;
+  border-radius: 16px;
+}
+
+.marqueeFadeTop, .marqueeFadeBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 55px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.marqueeFadeTop {
+  top: 0;
+  background: linear-gradient(180deg, var(--color-paper-card) 0%, transparent 100%);
+}
+
+.marqueeFadeBottom {
+  bottom: 0;
+  background: linear-gradient(0deg, var(--color-paper-card) 0%, transparent 100%);
+}
+
+.marqueeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  height: 100%;
+}
+
+@media (max-width: 800px) {
+  .marqueeGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.marqueeColumn {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.marqueeTrack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation-name: scrollUpReviews;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.trackSpeedSlow {
+  animation-duration: 32s;
+}
+
+.trackSpeedMedium {
+  animation-duration: 38s;
+}
+
+/* Hover to Pause on either column */
+.marqueeColumn:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+
+@keyframes scrollUpReviews {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+/* Static Filtered Grid (when specific category selected) */
+.staticReviewsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+@media (max-width: 600px) {
+  .staticReviewsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   REVIEW CARD STYLING
+   ========================================================================== */
+.reviewCard {
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  padding: 1.5rem 1.65rem;
+  box-shadow: 0 6px 20px rgba(42, 13, 17, 0.04);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewCard:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-gold);
+  box-shadow: 0 12px 30px rgba(42, 13, 17, 0.08);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.avatarWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-maroon) 0%, #1e0508 100%);
+  border: 1.5px solid var(--color-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(92, 29, 36, 0.15);
+}
+
+.avatarInitials {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-gold-bright);
+}
+
+.authorMeta {
+  flex: 1;
+}
+
+.authorName {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-maroon-ink);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.authorLoc {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  display: block;
+  margin-top: 0.15rem;
+}
+
+.verifiedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #27ae60;
+  background: rgba(39, 174, 96, 0.1);
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.checkIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.9rem;
+}
+
+.starsGold {
+  color: var(--color-gold-bright);
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+}
+
+.timeAgo {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.reviewQuote {
+  margin-top: 0.85rem;
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--color-ink);
+  font-style: italic;
+  flex: 1;
+}
+
+.cardFooter {
+  margin-top: 1.1rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--color-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+}
+
+.favoredDish {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70%;
+}
+
+.dishLabel {
+  color: var(--color-muted);
+}
+
+.dishValue {
+  color: var(--color-maroon);
+  font-weight: 500;
+}
+
+.helpfulCount {
+  color: var(--color-muted);
+  font-size: 0.74rem;
+}
+
+/* ==========================================================================
+   BOTTOM CTA BANNER
+   ========================================================================== */
+.bottomCtaBanner {
+  background: linear-gradient(135deg, #2b0b10 0%, #150406 100%);
+  border: 1px solid var(--color-gold);
+  border-radius: 14px;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  box-shadow: 0 16px 40px rgba(20, 5, 8, 0.25);
+  flex-wrap: wrap;
+}
+
+.bottomCtaContent {
+  max-width: 600px;
+}
+
+.bottomCtaTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  color: #fff;
+  font-weight: 500;
+  margin: 0;
+}
+
+.bottomCtaText {
+  margin-top: 0.45rem;
+  font-size: 0.95rem;
+  color: var(--color-paper);
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.ctaReserveBtn {
+  flex-shrink: 0;
+}

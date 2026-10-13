@@ -106,45 +106,6 @@
 .chefFrame {
   position: relative;
   width: min(100%, 280px);
-  padding: 0.55rem;
-  border: 1px solid transparent;
-}
-
-.frameStroke {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.frameStroke rect {
-  fill: none;
-  stroke: var(--color-gold);
-  stroke-width: 1;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  vector-effect: non-scaling-stroke;
-}
-
-.drawn .frameStroke rect {
-  animation: frameDraw 0.8s ease forwards;
-}
-
-@keyframes frameDraw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .chefFrame {
-    border-color: var(--color-gold);
-  }
-
-  .frameStroke {
-    display: none;
-  }
 }
 
 .chefFrame img {
@@ -153,6 +114,7 @@
   aspect-ratio: 3 / 4;
   object-fit: cover;
   object-position: center;
+  border-radius: 4px;
 }
 
 .quote {
