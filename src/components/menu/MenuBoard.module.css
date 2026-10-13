@@ -193,6 +193,9 @@
 
 .tastingProgress {
   align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
 }
 
 .tastingPill {
@@ -209,6 +212,23 @@
   text-transform: uppercase;
 }
 
+.clearTastingBtn {
+  background: none;
+  border: 1px solid var(--color-line);
+  padding: 0.25rem 0.65rem;
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clearTastingBtn:hover {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+  background: rgba(220, 53, 69, 0.08);
+}
+
 .slots {
   display: grid;
   gap: 1rem;
@@ -216,19 +236,29 @@
 }
 
 .slots li {
-  display: grid;
-  gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
   padding: 0.85rem 1rem;
   background: rgba(246, 241, 232, 0.45);
   border: 1px dashed var(--color-line);
   border-radius: 6px;
   transition: all 0.2s ease;
+  min-height: 90px;
 }
 
 .slotFilled {
   border-style: solid !important;
-  border-color: rgba(198, 161, 91, 0.5) !important;
-  background: rgba(255, 252, 247, 0.95) !important;
+  border-color: rgba(198, 161, 91, 0.6) !important;
+  background: rgba(255, 252, 247, 0.98) !important;
+  box-shadow: 0 4px 14px rgba(42, 13, 17, 0.05);
+}
+
+.slotHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .slotLabel {
@@ -239,14 +269,91 @@
   text-transform: uppercase;
 }
 
-.slotName {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--color-ink);
+.slotCountBadge {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-gold);
+  background: rgba(198, 161, 91, 0.15);
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
 }
 
-.slotRemove,
+.slotNameEmpty {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+.slotItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  max-height: 190px;
+  overflow-y: auto;
+  padding-right: 0.2rem;
+}
+
+.slotItemRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px dashed var(--color-line);
+}
+
+.slotItemRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.slotItemInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.slotItemName {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--color-maroon-ink);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slotItemPrice {
+  font-size: 0.78rem;
+  color: var(--color-maroon);
+  font-weight: 500;
+  margin-top: 0.1rem;
+}
+
+.slotRemoveBtn {
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.2rem 0.35rem;
+  border-radius: 3px;
+  line-height: 1;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.slotRemoveBtn:hover {
+  color: #c0392b;
+  background: rgba(192, 57, 43, 0.1);
+}
+
 .planButton {
   justify-self: start;
   margin-top: 0.25rem;

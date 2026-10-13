@@ -94,7 +94,7 @@ function MenuItem({ item, open, planned, canPlan, onToggle, onPlan, onHover, onL
               onClick={onPlan}
               data-cursor={planned ? 'remove' : 'add'}
             >
-              {planned ? '✓ Selected for Evening' : '+ Add to Evening Tasting'}
+              {planned ? '✓ In Tasting Cart (Click to Remove)' : '+ Add to Evening Tasting'}
             </button>
           ) : null}
         </div>
@@ -134,7 +134,14 @@ export default function MenuBoard() {
   const [spice, setSpice] = useState('all')
   const [price, setPrice] = useState('all')
   const [openId, setOpenId] = useState(null)
-  const [evening, setEvening] = useState({})
+  const initialEvening = {
+    starters: [],
+    mains: [],
+    breads: [],
+    desserts: [],
+  }
+
+  const [evening, setEvening] = useState(initialEvening)
   const [filterMotion, setFilterMotion] = useState(false)
   const [hoveredDish, setHoveredDish] = useState(null)
   const [previewPos, setPreviewPos] = useState({ x: 0, y: 0 })
@@ -227,14 +234,31 @@ export default function MenuBoard() {
 
   function choose(categoryId, item) {
     setEvening((current) => {
-      const already = current[categoryId]?.id === item.id
-      return { ...current, [categoryId]: already ? null : item }
+      const list = current[categoryId] || []
+      const exists = list.some((i) => i.id === item.id)
+      if (exists) {
+        return {
+          ...current,
+          [categoryId]: list.filter((i) => i.id !== item.id),
+        }
+      }
+      return {
+        ...current,
+        [categoryId]: [...list, item],
+      }
     })
   }
 
-  const picks = eveningCourses.map((course) => evening[course.id]).filter(Boolean)
-  const total = picks.reduce((sum, item) => sum + item.price, 0)
-  const selectedCount = picks.length
+  function removeDish(categoryId, itemId) {
+    setEvening((current) => ({
+      ...current,
+      [categoryId]: (current[categoryId] || []).filter((i) => i.id !== itemId),
+    }))
+  }
+
+  const allPicks = eveningCourses.flatMap((course) => evening[course.id] || [])
+  const total = allPicks.reduce((sum, item) => sum + item.price, 0)
+  const selectedCount = allPicks.length
 
   return (
     <div>
@@ -302,27 +326,57 @@ export default function MenuBoard() {
             </div>
             {selectedCount > 0 && (
               <div className={styles.tastingProgress}>
-                <span className={styles.tastingPill}>{selectedCount} of 4 Courses Selected</span>
+                <span className={styles.tastingPill}>
+                  {selectedCount} {selectedCount === 1 ? 'Plate' : 'Plates'} in Tasting Cart
+                </span>
+                <button
+                  type="button"
+                  className={styles.clearTastingBtn}
+                  onClick={() => setEvening(initialEvening)}
+                >
+                  Clear
+                </button>
               </div>
             )}
           </div>
           <ol className={styles.slots}>
             {eveningCourses.map((course) => {
-              const pick = evening[course.id]
+              const coursePicks = evening[course.id] || []
+              const hasPicks = coursePicks.length > 0
               return (
-                <li key={course.id} className={pick ? styles.slotFilled : styles.slotEmpty}>
-                  <span className={styles.slotLabel}>{course.label}</span>
-                  <strong className={styles.slotName}>{pick ? pick.name : 'Choose a plate'}</strong>
-                  {pick ? (
-                    <button
-                      type="button"
-                      className={styles.slotRemove}
-                      onClick={() => choose(course.id, pick)}
-                      aria-label={`Remove ${pick.name}`}
-                    >
-                      Remove
-                    </button>
-                  ) : null}
+                <li key={course.id} className={hasPicks ? styles.slotFilled : styles.slotEmpty}>
+                  <div className={styles.slotHeader}>
+                    <span className={styles.slotLabel}>{course.label}</span>
+                    {hasPicks && (
+                      <span className={styles.slotCountBadge}>
+                        {coursePicks.length} {coursePicks.length === 1 ? 'plate' : 'plates'}
+                      </span>
+                    )}
+                  </div>
+
+                  {!hasPicks ? (
+                    <strong className={styles.slotNameEmpty}>Choose a plate</strong>
+                  ) : (
+                    <div className={styles.slotItemsList}>
+                      {coursePicks.map((pick) => (
+                        <div key={pick.id} className={styles.slotItemRow}>
+                          <div className={styles.slotItemInfo}>
+                            <strong className={styles.slotItemName}>{pick.name}</strong>
+                            <span className={styles.slotItemPrice}>{formatPrice(pick.price)}</span>
+                          </div>
+                          <button
+                            type="button"
+                            className={styles.slotRemoveBtn}
+                            onClick={() => removeDish(course.id, pick.id)}
+                            aria-label={`Remove ${pick.name}`}
+                            title={`Remove ${pick.name}`}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </li>
               )
             })}
@@ -337,10 +391,13 @@ export default function MenuBoard() {
             {selectedCount > 0 && (
               <Link
                 to="/reserve"
+                state={{
+                  note: `Evening Tasting Cart: ${allPicks.map((p) => p.name).join(', ')} (${formatPrice(total)})`,
+                }}
                 className={styles.reserveWithMenuBtn}
                 data-cursor="reserve"
               >
-                Reserve Table with this Menu →
+                Reserve Table with this Menu ({selectedCount}) →
               </Link>
             )}
           </div>
@@ -390,7 +447,7 @@ export default function MenuBoard() {
                       key={item.id}
                       item={item}
                       open={openId === item.id}
-                      planned={evening[category.id]?.id === item.id}
+                      planned={(evening[category.id] || []).some((p) => p.id === item.id)}
                       canPlan={canPlan}
                       onToggle={() => setOpenId((current) => (current === item.id ? null : item.id))}
                       onPlan={() => {
